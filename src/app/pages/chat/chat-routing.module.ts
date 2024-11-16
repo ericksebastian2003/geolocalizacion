@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ChatPage } from './chat.page'; 
+
+
+import { ChatPage } from './chat.page'; // Correcta importación de ChatPage
+
 
 const routes: Routes = [
   {
@@ -13,4 +16,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
+
 export class ChatPageRoutingModule {}
+

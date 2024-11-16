@@ -3,8 +3,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
+
 import firebase from 'firebase/compat/app'; 
 import 'firebase/compat/firestore'; 
+
 
 
 export interface User {
@@ -25,13 +27,17 @@ export interface Message {
   providedIn: 'root',
 })
 export class ChatService {
+
   currentUser: User | null = null; 
+
 
   constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.currentUser = {
+
           uid: user.uid ?? '', 
+
           email: user.email ?? '',
         };
       } else {
