@@ -31,7 +31,7 @@ log.txt
 
 # Node
 /node_modules
-src/environments/*
+/environments
 npm-debug.log
 yarn-error.log
 

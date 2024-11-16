@@ -16,12 +16,16 @@
         [offset]="message.myMsg ? 3 : 0"
         [ngClass]="{ 'my-message': message.myMsg, 'other-message': !message.myMsg }">
         <b>{{ message.fromName }}</b><br>
-        <span>{{ message.msg }}</span>
+        <!-- Verifica si hay latitud y longitud para mostrar un mensaje especial -->
+        <span *ngIf="!message.latitude && !message.longitude">{{ message.msg }}</span>
+        <span *ngIf="message.latitude && message.longitude">
+          <a [href]="'https://www.google.com/maps?q=' + message.latitude + ',' + message.longitude" target="_blank">
+            Compartió una ubicación
+          </a>
+        </span>
         <div class="time ion-text-right">
           <br>{{ message.createdAt }}
-
         </div>
-        
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -30,13 +34,19 @@
 <ion-footer>
   <ion-toolbar color="light">
     <ion-row class="ion-align-items-center">
-      <ion-col size="10">
+      <ion-col size="8">
         <ion-textarea [(ngModel)]="messageInput" autoGrow="true" class="message-input" rows="1"></ion-textarea>
       </ion-col>
       <ion-col size="2">
         <ion-button expand="block" fill="clear" color="primary" [disabled]="!messageInput.trim()"
           class="msg-btn" (click)="sendMessage()">
           <ion-icon name="send" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <!-- Botón para compartir la ubicación -->
+      <ion-col size="2">
+        <ion-button expand="block" fill="clear" color="tertiary" (click)="sendLocation()">
+          <ion-icon name="location" slot="icon-only"></ion-icon>
         </ion-button>
       </ion-col>
     </ion-row>
