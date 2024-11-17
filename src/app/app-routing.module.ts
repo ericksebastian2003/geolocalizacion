@@ -1,19 +1,15 @@
-import { NgModule } from '@angular/core';
+/*import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'chat',
@@ -28,7 +24,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-/*
+*/
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { canActivate, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/compat/auth-guard'; // Asegúrate de importar correctamente desde '@angular/fire'
@@ -41,7 +37,7 @@ const redirectLoggedInToChat = () => redirectLoggedInTo(['/chat']);
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),
     ...canActivate(redirectLoggedInToChat)
   },
@@ -49,6 +45,12 @@ const routes: Routes = [
     path: 'chat',
     loadChildren: () => import('./pages/chat/chat.module').then(m => m.ChatPageModule),
     ...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path:'',
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),
+    ...canActivate(redirectLoggedInToChat)
+
   }
 ];
 
@@ -59,4 +61,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
-*/

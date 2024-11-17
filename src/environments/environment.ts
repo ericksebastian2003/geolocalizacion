@@ -1,7 +1,9 @@
 import {initializeApp} from "firebase/app";
 import {getAnalytics} from 'firebase/analytics'
 export const environment = {
-firebaseConfig : {
+  production : true ,
+  firebaseConfig : {
+
     apiKey: "AIzaSyDz1Y2d5ewP3qYuI77rz1oeBzSAPdjTCQI",
     authDomain: "b-eec63.firebaseapp.com",
     databaseURL: "https://b-eec63-default-rtdb.firebaseio.com",

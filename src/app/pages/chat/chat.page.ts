@@ -233,8 +233,16 @@ export class ChatPage implements OnInit {
     return 'Deleted'; // Si el usuario no se encuentra, se devuelve 'Deleted'.
   }
 
-  // Función para cerrar la sesión del usuario.
-  signOut() {
-    this.afAuth.signOut();
+  signOut(): Promise<void> {
+    return this.afAuth.signOut()
+      .then(() => {
+        console.log('User signed out successfully');
+        // Puedes redirigir al usuario o ejecutar cualquier otra lógica adicional aquí.
+      })
+      .catch(error => {
+        console.error('Error signing out:', error);
+      });
   }
+  
+  
 }
