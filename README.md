@@ -61,5 +61,6 @@ Para testear podríamos intentar además abrir una ubiaación del chat; se inten
 
 ![8c6f2094-6b4e-40e3-bbf6-611f1ffa0088](https://github.com/user-attachments/assets/ea1800f5-d9b2-40f8-8f89-ca35cb71167c)
 
-APK:
+[**APK**](https://github.com/ericksebastian2003/geolocalizacion/blob/0fdf327b8d93700b76f20fd4008a4e5279957111/aplicacion.apk)
+
 
