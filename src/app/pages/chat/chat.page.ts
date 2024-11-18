@@ -5,119 +5,7 @@ import { Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-import {Geolocation} from '@capacitor/geolocation';
-import 'firebase/compat/firestore'; 
-/*
-// Definimos la interfaz para el usuario
-export interface User {
-  uid: string;
-  email: string;
-}
-
-// Definimos la interfaz para los mensajes del chat
-export interface Message {
-  createdAt: firebase.firestore.FieldValue;
-  id: string;
-  from: string;
-  msg: string;
-  fromName: string;
-  myMsg: boolean;
-}
-
-@Component({
-  selector: 'app-chat',
-  templateUrl: './chat.page.html',
-  styleUrls: ['./chat.page.scss'],
-})
-export class ChatPage implements OnInit {
-  currentUser: User | null = null;
-
-  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore) {}
-
-  ngOnInit() {
-    this.afAuth.authState.subscribe((user) => {
-      if (user) {
-        this.currentUser = {
-          uid: user.uid ?? '', // Si 'user.uid' es null, se asigna una cadena vacía
-          email: user.email ?? '' // Si 'user.email' es null, se asigna una cadena vacía
-        };
-      }
-    });
-    
-  }
-
-  async signup({ email, password }: { email: string; password: string }): Promise<any> {
-    try {
-      const credential = await this.afAuth.createUserWithEmailAndPassword(email, password);
-      const uid = credential.user?.uid;
-      const userEmail = credential.user?.email;
-      if (uid && userEmail) {
-        return this.afs.doc(`users/${uid}`).set({
-          uid,
-          email: userEmail,
-        });
-      } else {
-        throw new Error('User data is incomplete.');
-      }
-    } catch (error) {
-      console.error('Error during signup:', error);
-      throw error;
-    }
-  }
-
-  signIn({ email, password }: { email: string; password: string }) {
-    return this.afAuth.signInWithEmailAndPassword(email, password);
-  }
-
-  signOut(): Promise<void> {
-    return this.afAuth.signOut();
-  }
-
-  addChatMessage(msg: string) {
-    if (!this.currentUser) {
-      throw new Error('User is not authenticated.');
-    }
-
-    return this.afs.collection('messages').add({
-      msg: msg,
-      from: this.currentUser.uid,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-  }
-
-  getChatMessages() {
-    let users: User[] = [];
-    return this.getUsers().pipe(
-      switchMap(res => {
-        users = res;
-        return this.afs.collection<Message>('messages', ref => ref.orderBy('createdAt')).valueChanges({ idField: 'id' });
-      }),
-      map((messages: Message[]) => {
-        for (let m of messages) {
-          if (m && m.from) {
-            m.fromName = this.getUserForMsg(m.from, users);
-            m.myMsg = this.currentUser?.uid === m.from;
-          }
-        }
-        return messages;
-      })
-    );
-  }
-
-  private getUsers(): Observable<User[]> {
-    return this.afs.collection('users').valueChanges({ idField: 'uid' }) as Observable<User[]>;
-  }
-
-  private getUserForMsg(msgFromId: string, users: User[]): string {
-    for (let usr of users) {
-      if (usr.uid === msgFromId) {
-        return usr.email;
-      }
-    }
-    return 'Deleted';
-  }
-}
-*/
+import { Geolocation } from '@capacitor/geolocation'; // Usando @capacitor/geolocation moderno
 
 // Define la interfaz para los usuarios que incluye UID y correo electrónico.
 export interface User {
@@ -195,13 +83,13 @@ export class ChatPage implements OnInit {
     }
   }
 
-  // Método para enviar la ubicación del usuario.
+  // Método para enviar la ubicación del usuario utilizando @capacitor/geolocation.
   async sendLocation() {
     try {
-      // Obtiene las coordenadas actuales del dispositivo.
-      const coordinates = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
-      const latitude = coordinates.coords.latitude;
-      const longitude = coordinates.coords.longitude;
+      // Obtiene las coordenadas actuales del dispositivo con alta precisión.
+      const position = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
 
       // Envía un mensaje con la ubicación.
       this.afs.collection('messages').add({
@@ -243,6 +131,4 @@ export class ChatPage implements OnInit {
         console.error('Error signing out:', error);
       });
   }
-  
-  
 }
